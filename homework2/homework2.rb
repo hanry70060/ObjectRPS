@@ -3,11 +3,8 @@ class Player
     @name = name
    
       def get_gesture
-         
-          input = gets.chomp.upcase
-          
+      input = gets.chomp.upcase
       end
-   
   end 
 end
 
@@ -23,15 +20,9 @@ class Computer < Player
   end
 end
 
-
 class RPS
   def initialize
-     intro 
-     begin
-     get_player_gestures 
-     decide  
-     continue?
-     end while @continue == 'Y'
+     show_message
   end
   def intro
     #印出開場畫面，告訴玩家遊戲規
@@ -48,11 +39,11 @@ class RPS
       "R"=>"S"
     }
     if hash[@user_input] == @com_input
-        puts "贏了！"
-        elsif hash[@com_input] == @user_input
-        puts "輸了！"
-        else 
-        puts "平手!!"
+          return "贏了！"
+    elsif hash[@com_input] == @user_input
+          return "輸了！"
+    else 
+          return "平手!!"
 
     end
   end
@@ -66,22 +57,33 @@ class RPS
     end while !['R', 'P', 'S'].include?(@user_input)
     computer = Computer.new(@com_input)
     @com_input = computer.get_gesture
-    puts "電腦出 " + @com_input + " 玩家出 " + @user_input
+   
 
   end
 
   def continue?
     #判斷玩家是否要繼續下一輪
-     begin
+    begin
     puts '再玩一次?: Y / N'
     player = Player.new(@continue)
     @continue = player.get_gesture
-     end while !["Y", "N"].include?(@continue)
+    end while !["Y", "N"].include?(@continue)
 
   end
 
   def show_message
     #印出結果
+    begin
+    intro 
+    get_player_gestures
+    puts  decide + "電腦出" + @com_input + " 玩家出" + @user_input 
+    continue?
+    end while @continue == 'Y'
+
+
+       
+     
+     
   end
 end
 
